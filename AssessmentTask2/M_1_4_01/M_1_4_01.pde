@@ -47,9 +47,9 @@ import java.util.Calendar;
 
 
 // ------ mesh ------
-int tileCount = 20;
+int tileCount = 10;
     //DLH tileCount = number of squares in mesh grid along sides.
-int zScale = 250;
+int zScale = 150;
     //DLH zScale detirmines how tall/mountainous/vertically varied the mesh is
 
 // ------ noise ------
@@ -59,8 +59,9 @@ int octaves = 4;
 float falloff = 0.5;
 
 // ------ mesh coloring ------
-//DLH  color midColor, topColor, bottomColor;
-color red, yellow, green;
+//  color midColor, topColor, bottomColor;
+// color red, yellow, green;
+color flesh1, flesh2, flesh3;
 color strokeColor;
 float threshold = 0.50;
 
@@ -81,9 +82,14 @@ void setup() {
   cursor(CROSS);
 
   // colors
-  green = color(120,99,86);
-  yellow = color (58, 98, 98);
-  red = color (5, 98, 98);
+  flesh1 = color(34,58,50);
+  flesh2 = color(30,47,96);
+  flesh3 = color(30,30,99);
+  
+//  green = color(120,99,86);
+//  yellow = color (58, 98, 98);
+//  red = color (5, 98, 98);
+  
 //  topColor = color(0, 0, 100);
 //  midColor = color(191, 99, 63);
 //  bottomColor = color(0, 0, 0);
@@ -131,9 +137,9 @@ void draw() {
   float tileSizeY = (float)height/tileCount;
   float noiseStepY = (float)noiseYRange/tileCount;
 
-  for (int meshY=0; meshY<=tileCount; meshY++) {
+  for (float meshY=0; meshY<=tileCount; meshY++) {
  //   beginShape(TRIANGLE_STRIP);
-    for (int meshX=0; meshX<=tileCount; meshX++) {
+    for (float meshX=0; meshX<=tileCount; meshX++) {
 
       float x = map(meshX, 0, tileCount, -width/2, width/2);
       float y = map(meshY, 0, tileCount, -height/2, height/2);
@@ -150,25 +156,49 @@ void draw() {
       colorMode(RGB);
       if (z1 <= threshold) {
         float amount = map(z1, 0, threshold, 0.15, 1);
-       interColor = lerpColor(red, yellow, amount);
+       interColor = lerpColor(flesh1, flesh2, amount);
    //DLH lerpcolor calculates some colour between the perametres.
       } 
       else {
         float amount = map(z1, threshold, noiseYMax, 0, 1);
-        interColor = lerpColor(yellow, green, amount);
+        interColor = lerpColor(flesh2, flesh3, amount);
       }
       colorMode(HSB, 360, 100, 100);
       fill(interColor);
-      
-      
-pushMatrix();
-translate (x,y,z1*zScale);
+
+
+    
+      color nipple = color(20,66,79);
+      fill(nipple);
+     
+    pushMatrix();
+translate (x,y+10,z1*zScale);
 sphere (5);
-popMatrix ();
-pushMatrix();
+
+    popMatrix();
+    
+    pushMatrix();
+translate (x,y+20,z1*zScale);
+sphere (5);
+
+    popMatrix();
+    
+    fill(interColor);
+    
+    pushMatrix();
+translate (x,y 
+,z1*zScale);
+
+sphere (5);
+    popMatrix ();
+
+
+
+    pushMatrix();
+
 translate (x,y+tileSizeY, z2*zScale);
-sphere (5);
-popMatrix ();
+sphere (20);
+    popMatrix ();
 //      vertex(x, y, z1*zScale);   
 //      vertex(x, y+tileSizeY, z2*zScale);
     }
@@ -177,6 +207,7 @@ popMatrix ();
   popMatrix();
 
   tiler.post();
+  
 }
 
 void mousePressed() {
