@@ -47,9 +47,9 @@ import java.util.Calendar;
 
 
 // ------ mesh ------
-int tileCount = 25;
+int tileCount = 20;
     //DLH tileCount = number of squares in mesh grid along sides.
-int zScale = 150;
+int zScale = 250;
     //DLH zScale detirmines how tall/mountainous/vertically varied the mesh is
 
 // ------ noise ------
@@ -59,9 +59,10 @@ int octaves = 4;
 float falloff = 0.5;
 
 // ------ mesh coloring ------
-color midColor, topColor, bottomColor;
+//DLH  color midColor, topColor, bottomColor;
+color red, yellow, green;
 color strokeColor;
-float threshold = 0.30;
+float threshold = 0.50;
 
 // ------ mouse interaction ------
 int offsetX = 0, offsetY = 0, clickX = 0, clickY = 0, zoom = -280;
@@ -80,9 +81,12 @@ void setup() {
   cursor(CROSS);
 
   // colors
-  topColor = color(0, 0, 100);
-  midColor = color(191, 99, 63);
-  bottomColor = color(0, 0, 0);
+  green = color(120,99,86);
+  yellow = color (58, 98, 98);
+  red = color (5, 98, 98);
+//  topColor = color(0, 0, 100);
+//  midColor = color(191, 99, 63);
+//  bottomColor = color(0, 0, 0);
 
   strokeColor = color(0, 0, 0);
 }
@@ -146,12 +150,12 @@ void draw() {
       colorMode(RGB);
       if (z1 <= threshold) {
         float amount = map(z1, 0, threshold, 0.15, 1);
-        interColor = lerpColor(bottomColor, midColor, amount);
+       interColor = lerpColor(red, yellow, amount);
    //DLH lerpcolor calculates some colour between the perametres.
       } 
       else {
         float amount = map(z1, threshold, noiseYMax, 0, 1);
-        interColor = lerpColor(midColor, topColor, amount);
+        interColor = lerpColor(yellow, green, amount);
       }
       colorMode(HSB, 360, 100, 100);
       fill(interColor);
@@ -159,11 +163,11 @@ void draw() {
       
 pushMatrix();
 translate (x,y,z1*zScale);
-sphere (50);
+sphere (5);
 popMatrix ();
 pushMatrix();
 translate (x,y+tileSizeY, z2*zScale);
-sphere (50);
+sphere (5);
 popMatrix ();
 //      vertex(x, y, z1*zScale);   
 //      vertex(x, y+tileSizeY, z2*zScale);
