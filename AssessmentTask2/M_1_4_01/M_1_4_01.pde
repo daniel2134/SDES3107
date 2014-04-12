@@ -46,6 +46,7 @@ import processing.opengl.*;
 import java.util.Calendar;
 
 
+
 // ------ mesh ------
 int tileCount = 10;
     //DLH tileCount = number of squares in mesh grid along sides.
@@ -136,9 +137,12 @@ void draw() {
 
   float tileSizeY = (float)height/tileCount;
   float noiseStepY = (float)noiseYRange/tileCount;
+  
+//   beginShape();
+// vertex(-width/2,-height/2,153);
 
   for (float meshY=0; meshY<=tileCount; meshY++) {
- //   beginShape(TRIANGLE_STRIP);
+
     for (float meshX=0; meshX<=tileCount; meshX++) {
 
       float x = map(meshX, 0, tileCount, -width/2, width/2);
@@ -147,7 +151,10 @@ void draw() {
       float noiseX = map(meshX, 0, tileCount, 0, noiseXRange);
       float noiseY = map(meshY, 0, tileCount, 0, noiseYRange);
       float z1 = noise(noiseX, noiseY);
+      float zOnePointFive = noise(noiseX, noiseY+(noiseStepY)/2);
       float z2 = noise(noiseX, noiseY+noiseStepY);
+
+println (z1*zScale); // = 153 which is where i got the value for the vertex (above)
 
     //DLH  this code applies different shades of colours to different triangles depending 
     //DLH  on their z1 value (vertical height)
@@ -164,52 +171,34 @@ void draw() {
         interColor = lerpColor(flesh2, flesh3, amount);
       }
       colorMode(HSB, 360, 100, 100);
-      fill(interColor);
+//      fill(interColor);
+       noFill();
+       
+       float rainbow = map(meshX, 0, tileCount, 0, 100);
+       
+strokeWeight (5);
+stroke (rainbow,70,90);
+ 
 
-
+line (x, y, z1*zScale, 
+              x, y+(tileSizeY)/2, zOnePointFive*zScale) ;
+              strokeWeight (10);
+             stroke (rainbow+50,70,90);
+              point (x, y+(tileSizeY)/2, zOnePointFive*zScale);
+              point (x, y, z1*zScale);
+  //              x, y+tileSizeY, z2*zScale );
+    //  vertex(x, y, z1*zScale);   
+    //  vertex(x, y+tileSizeY, z2*zScale);
     
-      color nipple = color(20,66,79);
-      fill(nipple);
-     
-    pushMatrix();
-translate (x,y+10,z1*zScale);
-sphere (5);
-
-    popMatrix();
-    
-    pushMatrix();
-translate (x,y+20,z1*zScale);
-sphere (5);
-
-    popMatrix();
-    
-    fill(interColor);
-    
-    pushMatrix();
-translate (x,y 
-,z1*zScale);
-
-sphere (5);
-    popMatrix ();
-
-
-
-    pushMatrix();
-
-translate (x,y+tileSizeY, z2*zScale);
-sphere (20);
-    popMatrix ();
-//      vertex(x, y, z1*zScale);   
-//      vertex(x, y+tileSizeY, z2*zScale);
     }
 //    endShape();
+       
   }
   popMatrix();
 
   tiler.post();
-  
+    
 }
-
 void mousePressed() {
   clickX = mouseX;
   clickY = mouseY;
