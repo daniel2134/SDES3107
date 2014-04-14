@@ -47,16 +47,20 @@ float[] r = new float[maxCount]; // radius
 boolean drawGhosts = false;
 
 
+ 
+ 
 void setup() {
   size(800, 800);
   smooth();
 
   // first circle
+ 
   x[0] = width/2;
   y[0] = height/2;
-  r[0] = 10;
+  r[0] = 50;
   //r[0] = 360; 
   
+  colorMode (HSB, 100,100,100);
   
 }
 
@@ -71,14 +75,14 @@ void draw() {
   // create a random set of parameters
 
   
-  float newR = random(1, 12);
+  float newR = random(1, 7);
       //DLH affects the size range of the circles
-//DLH  float newX = random(0+newR, width-newR);
-//DLH  float newY = random(0+newR, height-newR);
+  float newX = random(0+newR, width-newR);
+  float newY = random(0+newR, height-newR);
  //DLH float newX = random(-(width-100*newR), width-50*newR);
  //DLH float newY = random(-(height-100*newR), height-50*newR);
-float newX = random(50*newR, width-50*newR);
-float newY = random((50*newR), height-50*newR);
+//float newX = random(50*newR, width-50*newR);
+//float newY = random((50*newR), height-50*newR);
  
  
   float closestDist = 100000000;
@@ -88,10 +92,10 @@ float newY = random((50*newR), height-50*newR);
   for(int i=0; i < currentCount; i++) {
     float newDist = dist(newX,newY,x[i],y[i]);
     if (newDist < closestDist) {
-      closestDist = newDist;
-      closestIndex = i; 
+     closestDist = newDist;
+     closestIndex = i; 
       
-    } 
+   } 
   }
 
   // aline it to the closest circle outline
@@ -114,19 +118,31 @@ float newY = random((50*newR), height-50*newR);
       
     }
   }
-
+/*
   for (int i=0 ; i < currentCount; i++) {
-    if (i == 0) noFill();
-    else fill(95,86,0,255);
-    noStroke();
-    if (i>1000) fill(200,10,10,255);
-    if (i>2000) fill(20,210,10,255);
-    if (i>3000) fill(20,60,240,255);
-    ellipse(x[i],y[i], r[i]*2,r[i]*2); 
-
- //      ellipse(x[i], y[i], r[i]*50,r[i]*50);  
+float HUE = map(i, 0, 5000, 0, 100);
+  if (i == 0) noFill();
+ else 
+ 
+ fill(HUE,100,100);
+  
+    ellipse(x[i]-200,y[i]-200, r[i]*2,r[i]*2); 
   }
+  */
+  
+    for (int i=0 ; i < currentCount; i++) {
+ float HUE2 = map(i, 0, 5000, 0, 100);
+ 
+  if (i == 0) noFill();
+ else 
 
+ fill(HUE2,100,100);
+  rotate(HALF_PI);
+    ellipse(x[i],y[i], r[i]*2,r[i]*2); 
+  }
+  
+  
+  
   if (currentCount >= maxCount) noLoop();
 
   if (savePDF) {
