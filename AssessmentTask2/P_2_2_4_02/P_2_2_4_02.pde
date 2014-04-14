@@ -76,7 +76,7 @@ void draw() {
   // create a random set of parameters
 
   
-  float newR = random(1, 7);
+  float newR = random(1, 3);
       //DLH affects the size range of the circles
   float newX = random(0+newR, width-newR);
   float newY = random(0+newR, height-newR);
@@ -123,17 +123,16 @@ void draw() {
 
   
     for (int i=0 ; i < currentCount; i++) {
- //float HUE2 = map(i, 0, 5000, 0, 100);
-float lighter = map(i,0,2000,0,245);
-if (lighter == 245) lighter = 245;
+ float HUE2 = map(i, 0, 2000, 0, 100);
+
   if (i == 0) noFill();
  else 
 
-// fill(HUE2,100,100);
+ fill(HUE2,100,100);
 strokeWeight (1);
-stroke(0+lighter);
-  //  ellipse(x[i]-200,y[i]-200, r[i]*2,r[i]*2); 
-  line(x[i+1],y[i+1], x[i+2], x[i+2]);
+
+   rect(x[i],y[i], (80-0.1*(i)),(80-0.1*(i))); 
+  
   
   
   }
