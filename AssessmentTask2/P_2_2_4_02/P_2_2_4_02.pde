@@ -38,6 +38,12 @@ float[] x = new float[maxCount];
 float[] y = new float[maxCount];
 float[] r = new float[maxCount]; // radius
 
+// DLH   (newx[anything]) = 0 
+// DLH   (new float[maxCount]) =increasing value
+// DLH the above "float[]..." stuff sets the limits of possible newx, newy, x etc values
+
+
+
 boolean drawGhosts = false;
 
 
@@ -48,8 +54,10 @@ void setup() {
   // first circle
   x[0] = width/2;
   y[0] = height/2;
-  //r[0] = 10;
-  r[0] = 360; 
+  r[0] = 10;
+  //r[0] = 360; 
+  
+  
 }
 
 
@@ -61,18 +69,28 @@ void draw() {
   //noFill();
 
   // create a random set of parameters
-  float newR = random(1, 7);
-  float newX = random(0+newR, width-newR);
-  float newY = random(0+newR, height-newR);
 
+  
+  float newR = random(1, 12);
+      //DLH affects the size range of the circles
+//DLH  float newX = random(0+newR, width-newR);
+//DLH  float newY = random(0+newR, height-newR);
+ //DLH float newX = random(-(width-100*newR), width-50*newR);
+ //DLH float newY = random(-(height-100*newR), height-50*newR);
+float newX = random(50*newR, width-50*newR);
+float newY = random((50*newR), height-50*newR);
+ 
+ 
   float closestDist = 100000000;
+      //DLH affects the distance between the original circle and added small circles
   int closestIndex = 0;
   // which circle is the closest?
   for(int i=0; i < currentCount; i++) {
-    float newDist = dist(newX,newY, x[i],y[i]);
+    float newDist = dist(newX,newY,x[i],y[i]);
     if (newDist < closestDist) {
       closestDist = newDist;
       closestIndex = i; 
+      
     } 
   }
 
@@ -89,16 +107,24 @@ void draw() {
   // draw circles at random position and lines
   if (drawGhosts) {
     for (int i=1 ; i < currentCount; i++) {
-      fill(230);
+      fill(95,86,0,50);
       ellipse(newx[i],newy[i], r[i]*2,r[i]*2);  
       line(newx[i],newy[i], x[i],y[i]);
+
+      
     }
   }
-  
+
   for (int i=0 ; i < currentCount; i++) {
     if (i == 0) noFill();
-    else fill(50);
-    ellipse(x[i],y[i], r[i]*2,r[i]*2);  
+    else fill(95,86,0,255);
+    noStroke();
+    if (i>1000) fill(200,10,10,255);
+    if (i>2000) fill(20,210,10,255);
+    if (i>3000) fill(20,60,240,255);
+    ellipse(x[i],y[i], r[i]*2,r[i]*2); 
+
+ //      ellipse(x[i], y[i], r[i]*50,r[i]*50);  
   }
 
   if (currentCount >= maxCount) noLoop();
