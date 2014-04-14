@@ -57,8 +57,9 @@ void setup() {
  
   x[0] = width/2;
   y[0] = height/2;
-  r[0] = 50;
-  //r[0] = 360; 
+  
+  r[0] = 150; 
+
   
   colorMode (HSB, 100,100,100);
   
@@ -118,38 +119,26 @@ void draw() {
       
     }
   }
-/*
-  for (int i=0 ; i < currentCount; i++) {
-float HUE = map(i, 0, 5000, 0, 100);
-  if (i == 0) noFill();
- else 
- 
- fill(HUE,100,100);
   
-    ellipse(x[i]-200,y[i]-200, r[i]*2,r[i]*2); 
-  }
-  */
+
   
     for (int i=0 ; i < currentCount; i++) {
- float HUE2 = map(i, 0, 5000, 0, 100);
- 
+ //float HUE2 = map(i, 0, 5000, 0, 100);
+float lighter = map(i,0,2000,0,245);
+if (lighter == 245) lighter = 245;
   if (i == 0) noFill();
  else 
 
- fill(HUE2,100,100);
-  rotate(HALF_PI);
-    ellipse(x[i],y[i], r[i]*2,r[i]*2); 
-  }
+// fill(HUE2,100,100);
+strokeWeight (1);
+stroke(0+lighter);
+  //  ellipse(x[i]-200,y[i]-200, r[i]*2,r[i]*2); 
+  line(x[i+1],y[i+1], x[i+2], x[i+2]);
   
   
-  
-  if (currentCount >= maxCount) noLoop();
-
-  if (savePDF) {
-    savePDF = false;
-    endRecord();
   }
 }
+
 
 void keyReleased() {
   if (key == 's' || key == 'S') saveFrame(timestamp()+"_##.png");
