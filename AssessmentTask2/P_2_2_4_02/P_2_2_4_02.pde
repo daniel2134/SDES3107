@@ -44,7 +44,7 @@ float[] r = new float[maxCount]; // radius
 
 
 
-boolean drawGhosts = false;
+boolean drawGhosts = true;
 
 
  
@@ -58,7 +58,7 @@ void setup() {
   x[0] = width/2;
   y[0] = height/2;
   
-  r[0] = 150; 
+  r[0] = 1; 
 
   
   colorMode (HSB, 100,100,100);
@@ -110,11 +110,15 @@ void draw() {
   currentCount++;
 
   // draw circles at random position and lines
+  
+
+  
   if (drawGhosts) {
     for (int i=1 ; i < currentCount; i++) {
-      fill(95,86,0,50);
-      ellipse(newx[i],newy[i], r[i]*2,r[i]*2);  
-      line(newx[i],newy[i], x[i],y[i]);
+        float Dsize = 0.2*dist(width/2, height/2, newx[i],newy[i]);
+      fill(255,180,180,50);
+      ellipse(newx[i],newy[i], Dsize,Dsize);  
+      line(newx[i],newy[i], x[0],y[0]);
 
       
     }
@@ -131,7 +135,7 @@ void draw() {
  fill(HUE2,100,100);
 strokeWeight (1);
 
-   rect(x[i],y[i], (80-0.1*(i)),(80-0.1*(i))); 
+ //  rect(x[i],y[i], (20-0.1*(i)),(20-0.1*(i))); 
   
   
   
